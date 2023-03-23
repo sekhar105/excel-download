@@ -91,12 +91,21 @@ public ResponseEntity<?> mapReapExcelDatatoDB(@RequestParam("file") MultipartFil
 
         XSSFRow row = worksheet.getRow(i);
 
-        tempStudent.setId((int) row.getCell(0).getNumericCellValue());
+//        tempStudent.setId((int) row.getCell(0).getNumericCellValue());
         tempStudent.setName(row.getCell(1).getStringCellValue());
         tempStudent.setCls(row.getCell(2).getStringCellValue());
             tempStudentList.add(tempStudent);   
     }
-    return new ResponseEntity<>(tempStudentList,HttpStatus.OK);
+    return new ResponseEntity<>(studentRepository.saveAll(tempStudentList),HttpStatus.OK);
 }
-
+@GetMapping("/test")
+public ResponseEntity<?> testadd(){
+	List<Student> lis = new ArrayList<Student>();
+	for(int i=0;i<3;i++) {
+		Student sts = new Student();
+		lis.add(sts);
+	}
+	
+	return new ResponseEntity<>(studentRepository.saveAll(lis),HttpStatus.OK);
+}
 }
